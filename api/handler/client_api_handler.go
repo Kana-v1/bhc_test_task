@@ -23,15 +23,24 @@ type Handler struct {
 	manager *manager.ClientsManager
 }
 
-func SetupHandler(manager *manager.ClientsManager) {
+func SetupClientHandler(manager *manager.ClientsManager) {
 	handler := &Handler{manager}
 
-	http.HandleFunc(CreateClientEndpoint, handler.CreateNewClient)        // post/put localhost:2000/client/create
-	http.HandleFunc(GetClientInfoEndpoint, handler.GetClientInfo)         // get localhost:2000/client/info&id=123
-	http.HandleFunc(GetClientsInfoEndpoint, handler.GetClientsInfo)       // get localhost:2000/clients/info
-	http.HandleFunc(FindClientForLeadEndpoint, handler.FindClientForLead) // get/post localhost:2000/clients/findForLead
+	http.HandleFunc(CreateClientEndpoint, handler.CreateNewClient)
+	http.HandleFunc(GetClientInfoEndpoint, handler.GetClientInfo)
+	http.HandleFunc(GetClientsInfoEndpoint, handler.GetClientsInfo)
+	http.HandleFunc(FindClientForLeadEndpoint, handler.FindClientForLead)
 }
 
+// @Accept json
+// @Produce json
+// @Router /client/create [post]
+// @Router /client/create [put]
+// @Param request body requests_models.CreateClientReqModel false "client's data"
+// @Success 200 {object} response_models.ClientReqResponse
+// @Success 405 {object} response_models.ClientReqResponse
+// @Success 400 {object} response_models.ClientReqResponse
+// @Success 500 {object} response_models.ClientReqResponse
 func (handler *Handler) CreateNewClient(w http.ResponseWriter, r *http.Request) {
 	var response response_models.ClientReqResponse
 	if r.Method != http.MethodPost && r.Method != http.MethodPut {
@@ -81,6 +90,14 @@ func (handler *Handler) CreateNewClient(w http.ResponseWriter, r *http.Request) 
 	writeResponse(statusCode, response, w)
 }
 
+// @Accept json
+// @Produce json
+// @Router /client/info [get]
+// @Param id query uint64 true "client's id to search by"
+// @Success 200 {object} response_models.ClientReqResponse
+// @Success 405 {object} response_models.ClientReqResponse
+// @Success 400 {object} response_models.ClientReqResponse
+// @Success 500 {object} response_models.ClientReqResponse
 func (handler *Handler) GetClientInfo(w http.ResponseWriter, r *http.Request) {
 	var response response_models.ClientReqResponse
 	if r.Method != http.MethodGet {
@@ -114,6 +131,12 @@ func (handler *Handler) GetClientInfo(w http.ResponseWriter, r *http.Request) {
 	writeResponse(statusCode, response, w)
 }
 
+// @Accept json
+// @Produce json
+// @Router /clients/info [get]
+// @Success 200 {object} response_models.ClientReqResponse
+// @Success 405 {object} response_models.ClientReqResponse
+// @Success 500 {object} response_models.ClientReqResponse
 func (handler *Handler) GetClientsInfo(w http.ResponseWriter, r *http.Request) {
 	var response response_models.ClientReqResponse
 	if r.Method != http.MethodGet {
@@ -139,6 +162,15 @@ func (handler *Handler) GetClientsInfo(w http.ResponseWriter, r *http.Request) {
 	writeResponse(statusCode, response, w)
 }
 
+// @Accept json
+// @Produce json
+// @Router /clients/findForLead [post]
+// @Router /clients/findForLead [get]
+// @Param request body requests_models.FindClientForLeadReqModel false "should issue lead immediately"
+// @Success 200 {object} response_models.ClientReqResponse
+// @Success 405 {object} response_models.ClientReqResponse
+// @Success 400 {object} response_models.ClientReqResponse
+// @Success 500 {object} response_models.ClientReqResponse
 func (handler *Handler) FindClientForLead(w http.ResponseWriter, r *http.Request) {
 	var response response_models.ClientReqResponse
 	if r.Method != http.MethodGet && r.Method != http.MethodPost {

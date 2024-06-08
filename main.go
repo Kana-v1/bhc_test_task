@@ -11,7 +11,8 @@ import (
 func main() {
 	dataStorage := data_storage.NewLocalDataStorage()
 	clientsManager := manager.NewClientsManager(dataStorage)
-	handler.SetupHandler(clientsManager)
+	handler.SetupClientHandler(clientsManager)
+	handler.SetupDocsHandler()
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

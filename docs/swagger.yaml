@@ -1,0 +1,198 @@
+definitions:
+  requests_models.CreateClientReqModel:
+    properties:
+      id:
+        type: integer
+      lead_capacity:
+        type: integer
+      name:
+        type: string
+      priority:
+        type: integer
+      working_hours:
+        type: integer
+    type: object
+  requests_models.FindClientForLeadReqModel:
+    properties:
+      issue_lead:
+        type: boolean
+    type: object
+  response_models.ClientReqResponse:
+    properties:
+      client:
+        $ref: '#/definitions/requests_models.CreateClientReqModel'
+      clients:
+        items:
+          $ref: '#/definitions/requests_models.CreateClientReqModel'
+        type: array
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /client/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: client's data
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/requests_models.CreateClientReqModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "405":
+          description: Method Not Allowed
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: client's data
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/requests_models.CreateClientReqModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "405":
+          description: Method Not Allowed
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+  /client/info:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: client's id to search by
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "405":
+          description: Method Not Allowed
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+  /clients/findForLead:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: should issue lead immediately
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/requests_models.FindClientForLeadReqModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "405":
+          description: Method Not Allowed
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: should issue lead immediately
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/requests_models.FindClientForLeadReqModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "405":
+          description: Method Not Allowed
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+  /clients/info:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "405":
+          description: Method Not Allowed
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response_models.ClientReqResponse'
+swagger: "2.0"

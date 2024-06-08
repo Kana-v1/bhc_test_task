@@ -108,7 +108,7 @@ func TestCanFindBestClientForLead(t *testing.T) {
 }
 
 func TestFullAPI(t *testing.T) {
-	handler.SetupHandler(manager.NewClientsManager(data_storage.NewLocalDataStorage()))
+	handler.SetupClientHandler(manager.NewClientsManager(data_storage.NewLocalDataStorage()))
 
 	port := "8080"
 	serverAddr := "http://localhost:" + port
